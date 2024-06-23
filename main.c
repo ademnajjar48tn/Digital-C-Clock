@@ -3,8 +3,13 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <stdbool.h>
-#include <unistd.h>
+#ifdef _WIN32
+	#include <windows.h>
+#else
+	#include <unistd.h>
+#endif
 #include <string.h>
+
 int main() {
 	time_t *t = malloc(sizeof(time_t));
 	*t = time(0);
@@ -25,21 +30,30 @@ int main() {
 				printf("%d:%d:%d\n", tim->tm_hour, tim->tm_min, tim->tm_sec);
 				break;
 			case 12:
-				int hour = tim->tm_hour;
-				if(hour >= 12) {
+				if(tim->tm_hour >= 12) {
 					strcpy(am_pm, "pm");
-					if(hour != 12) {
-						hour -= 12;
+					if(tim->tm_hour != 12) {
+						tim->tm_hour -= 12;
 					}
 				}
 				else {
 					strcpy(am_pm, "am");
 				}
-				printf("%d:%d:%d %s\n", hour, tim->tm_min, tim->tm_sec, am_pm);
+				printf("%d:%d:%d %s\n", tim->tm_hour, tim->tm_min, tim->tm_sec, am_pm);
 				break;
 		}
-		sleep(1);
-		system("clear");
+		#ifdef _WIN32
+			Sleep(1);
+		#else
+			sleep(1);
+		#endif
+		#ifdef _WIN32	
+			system("cls");
+		#elif __linux__
+			system("clear");
+		#elif __APPLE__
+			system("clear");
+		#endif
 		free(t);
 		t = malloc(sizeof(time_t));
 		*t = time(0);
