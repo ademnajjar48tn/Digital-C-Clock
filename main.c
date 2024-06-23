@@ -22,25 +22,26 @@ int main() {
 	while (1) {
 		switch(*TimeFormat) {
 			case 24:
-				printf("%d:%d:%d\n Press Q to exit\n", tim->tm_hour, tim->tm_min, tim->tm_sec);
+				printf("%d:%d:%d\n", tim->tm_hour, tim->tm_min, tim->tm_sec);
 				break;
 			case 12:
-				if(tim->tm_hour >= 12) {
+				int hour = tim->tm_hour;
+				if(hour >= 12) {
 					strcpy(am_pm, "pm");
-					if(!tim->tm_hour == 12) {
-						tim->tm_hour -= 12;
+					if(hour != 12) {
+						hour -= 12;
 					}
 				}
 				else {
 					strcpy(am_pm, "am");
 				}
-				printf("%d:%d:%d %s", tim->tm_hour, tim->tm_min, tim->tm_sec, am_pm);
+				printf("%d:%d:%d %s\n", hour, tim->tm_min, tim->tm_sec, am_pm);
 				break;
 		}
 		sleep(1);
 		system("clear");
 		free(t);
-		t = (time_t*) malloc(sizeof(time_t));
+		t = malloc(sizeof(time_t));
 		*t = time(0);
 		free(tim);
 		tim = (struct tm*) malloc(sizeof(struct tm*));
