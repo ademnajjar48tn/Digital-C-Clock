@@ -49,7 +49,7 @@ int main() {
 			sleep(1);
 		#endif
 		#ifdef _WIN32
-			clrscr();
+			system("clear");
 		#elif __linux__
 			system("clear");
 		#elif __APPLE__
