@@ -4,6 +4,7 @@
 #include <ctype.h>
 #include <stdbool.h>
 #ifdef _WIN32
+	#include <conio.h>
 	#include <windows.h>
 #else
 	#include <unistd.h>
@@ -47,8 +48,8 @@ int main() {
 		#else
 			sleep(1);
 		#endif
-		#ifdef _WIN32	
-			system("cls");
+		#ifdef _WIN32
+			clrscr();
 		#elif __linux__
 			system("clear");
 		#elif __APPLE__
